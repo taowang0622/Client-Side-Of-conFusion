@@ -109,6 +109,15 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
             $scope.commentForm.$setPristine();
         };
     }])
+    //IndexController controlls the home page
+    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
+        $scope.featuredDish = menuFactory.getDish(0);
+        $scope.featuredPromotion = menuFactory.getPromotion(0);
+        $scope.executiveChef = corporateFactory.getLeader(3);
+    }])
+    .controller('AboutController', ['$scope', 'corporateFactory', function ($scope, corporateFactory) {
+        $scope.leaders = corporateFactory.getLeaders();
+    }])
 ;
 
 

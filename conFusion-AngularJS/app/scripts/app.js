@@ -1,67 +1,71 @@
 'use strict';
-angular.module("confusionApp", ['ui.router'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+
+angular.module('confusionApp', ['ui.router'])
+    .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-        //in the context of SPA, route refers to the hash portion of the url
-        //route for the home page
+
+        // route for the home page
             .state('app', {
-                url: '/',
+                url:'/',
                 views: {
                     'header': {
-                        templateUrl: "views/header.html"
+                        templateUrl : 'views/header.html',
                     },
                     'content': {
-                        template: '<h1>To be completed</h1>',
-                        controller: "IndexController"
+                        templateUrl : 'views/home.html',
+                        controller  : 'IndexController'
                     },
-                    'footer' : {
-                        templateUrl : "views/footer.html"
+                    'footer': {
+                        templateUrl : 'views/footer.html',
                     }
                 }
+
             })
-            //route for the aboutus page
+
+            // route for the aboutus page
             .state('app.aboutus', {
                 url:'aboutus',
-                views:{
-                    'content@' : {
-                        template:"<h1>To be completed</h1>"
+                views: {
+                    'content@': {
+                        templateUrl : 'views/aboutus.html',
+                        controller  : 'AboutController'
                     }
                 }
             })
-            //route for the contactus page
+
+            // route for the contactus page
             .state('app.contactus', {
                 url:'contactus',
-                views : {
-                    'content@' : {
-                        templateUrl:"views/contactus.html",
-                        controller:'ContactController'
+                views: {
+                    'content@': {
+                        templateUrl : 'views/contactus.html',
+                        controller  : 'ContactController'
                     }
                 }
             })
-            //route for the menu page
+
+            // route for the menu page
             .state('app.menu', {
-                url:'menu',
-                views:{
-                    'content@':{
-                        templateUrl:"views/menu.html",
-                        controller:"MenuController"
+                url: 'menu',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/menu.html',
+                        controller  : 'MenuController'
                     }
                 }
             })
-            //route for the dishdetail page
+
+            // route for the dishdetail page
             .state('app.dishdetails', {
-                url:'menu/:id',
-                views:{
-                    'content@':{
-                        templateUrl:"views/dishdetail.html",
-                        controller:'DishDetailController'
+                url: 'menu/:id',
+                views: {
+                    'content@': {
+                        templateUrl : 'views/dishdetail.html',
+                        controller  : 'DishDetailController'
                     }
                 }
             });
-        $urlRouterProvider.otherwise('/');
 
+        $urlRouterProvider.otherwise('/');
     })
 ;
-
-
-
