@@ -1,0 +1,43 @@
+
+<div class="container">
+    <div class="row row-content" ng-controller="MenuController">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-default btn-xs pull-right" ng-click="toggleDetails();">
+                {{showDetails ? "Hide Details" : "Show Details"}}</button>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" ng-class="{active:isSelected(1)}">
+                    <a ng-click="selectTab(1)" role="tab" aria-controls="all menu">The Menu</a></li>
+                <li role="presentation" ng-class="{active:isSelected(2)}">
+                    <a ng-click="selectTab(2)" role="tab" aria-controls="appetizers">Appetizers</a></li>
+                <li role="presentation" ng-class="{active:isSelected(3)}">
+                    <a ng-click="selectTab(3)" role="tab" aria-controls="mains">Mains</a></li>
+                <li role="presentation" ng-class="{active:isSelected(4)}">
+                    <a ng-click="selectTab(4)" role="tab" aria-controls="desserts">Desserts</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <ul class="media-list tab-pane fade in active">
+                    <li class="media" ng-repeat="dish in dishes | filter:filtText">
+                        <div class="media-left media-middle">
+                            <a ui-sref="app.dishdetails({id:dish._id})">
+                                <!--ng-src="{{dish.image}}" is wrong-->
+                                <img class="media-object img-thumbnail" ng-src={{dish.image}} alt="Uthappizza">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading">{{dish.name}}
+                                <span class="label label-danger">{{dish.label}}</span>
+                                <!--currency is a filter-->
+                                <span class="badge">{{dish.price | currency}}</span></h2>
+                            <p ng-show="showDetails">{{dish.description}}</p>
+                            <!--<p>Comment: {{dish.comment}}</p>-->
+                            <!--<p>Type your comment:-->
+                            <!--<input type="text" ng-model="dish.comment"></p>-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>

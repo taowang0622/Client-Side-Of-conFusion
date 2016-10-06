@@ -1,0 +1,103 @@
+<div class="container" ng-controller="DishDetailController">
+    <div class="row row-content">
+        <div class="col-xs-12">
+            <button type="button" class="btn btn-primary btn-xs pull-right"
+                    ui-sref="app.menu">Back to Menu
+            </button>
+            <div class="media">
+                <div class="media-left media-middle">
+                    <img ng-src={{dish.image}}
+                         class="media-object img-thumbnail">
+                </div>
+                <div class="media-body">
+                    <h2>{{dish.name}}
+                        <span class="label label-danger">{{dish.label}}</span>
+                        <span class="badge">{{dish.price | currency}}</span>
+                    </h2>
+                    <p>{{dish.description}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-9 col-xs-offset-1">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <b style="font-size: 20px">Consumer Comments</b>
+                </div>
+                <div class="col-xs-12 col-xs-4">
+                    <label>Sort by: <input type="text" ng-model="dishDetailCtrl.key" value="test"></label>
+                </div>
+            </div>
+            <!--<p>{{dishDetailCtrl.key}}</p>   debug ng-model-->
+
+            <blockquote ng-repeat="review in dish.comments | orderBy : key">
+                <p>{{review.rating}} <i class="fa fa-star" aria-hidden="true"></i></p>
+                <p>{{review.comment}}</p>
+                <footer>{{review.author}}, {{review.date | date:"MMM. dd, yyyy"}}</footer>
+            </blockquote>
+        </div>
+        <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
+            <blockquote ng-show="commentForm.$dirty && commentForm.$valid">
+                <p>{{review.rating}}
+                    <i class="fa fa-star" aria-hidden="true"></i></p>
+                <p>{{review.comment}}</p>
+                <footer>{{review.author}}</footer>
+            </blockquote>
+
+
+            <form class="form-horizontal" name="commentForm" ng-submit="submitComment()" novalidate>
+                <div class="form-group"
+                     ng-class="{'has-error' : commentForm.name.$dirty && commentForm.name.$error.required}">
+                    <label class="col-xs-2 control-label" for="userName">Name:</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="userName" name="name" placeholder="Enter your name."
+                               ng-model="review.author" required>
+                        <span class="help-block" ng-show="commentForm.name.$dirty && commentForm.name.$error.required">
+                        Please enter your name.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Rating:</label>
+                    <div class="col-xs-10">
+                        <label class="radio-inline">
+                            <input type="radio" name="userRating" ng-model="review.rating" value="1"> 1
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="userRating" ng-model="review.rating" value="2"> 2
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="userRating" ng-model="review.rating" value="3"> 3
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="userRating" ng-model="review.rating" value="4"> 4
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="userRating" ng-model="review.rating" value="5"> 5
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': commentForm.comment.$dirty && commentForm.comment.$error.required}">
+                    <label class="col-xs-2 control-label" for="userComment">
+                        Comment:
+                    </label>
+                    <div class="col-xs-10">
+                        <textarea class="form-control" id="userComment" name="comment"
+                                  ng-model="review.comment" rows="15" required></textarea>
+                        <span class="help-block"
+                              ng-show="commentForm.comment.$dirty && commentForm.comment.$error.required">
+                            Please enter your comment.
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-2">
+                        <button type="submit" class="btn btn-primary"
+                                ng-disabled="commentForm.$invalid || commentForm.$pristine">Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
