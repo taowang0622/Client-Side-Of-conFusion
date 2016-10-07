@@ -5,7 +5,13 @@
 angular.module("confusionApp") //delete empty array [], but why??????????????????
     .controller("MenuController", ['$scope', 'menuFactory', function ($scope, menuFactory) { //by convention, the controller name is UpperCamelCase
         //attributes
-        $scope.dishes = menuFactory.getDishes();
+        $scope.dishes = [];
+        menuFactory.getDishes().then(
+          function (response) {
+              $scope.dishes = response.data;
+          }
+        );
+
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.showDetails = false;
@@ -75,8 +81,15 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
         };
     }])
     .controller('DishDetailController', ['$scope', 'menuFactory', '$stateParams' ,function ($scope, menuFactory, $stateParams) {
+        $scope.showDish = false;
 
-        $scope.dish = menuFactory.getDish(parseInt($stateParams.id, 10));
+        $scope.dish = [];
+        menuFactory.getDish(parseInt($stateParams.id, 10)).then(
+            function (response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            }
+        )
 
     }])
 
@@ -111,7 +124,17 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
     }])
     //IndexController controlls the home page
     .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
-        $scope.featuredDish = menuFactory.getDish(0);
+        $scope.showDish = false;
+
+        // $scope.featuredDish = menuFactory.getDish(0);
+        $scope.featuredDish = {};
+        menuFactory.getDish(0).then(
+            function (response) {
+                $scope.featuredDish = response.data;
+                $scope.showDish = true;
+            }
+        );
+
         $scope.featuredPromotion = menuFactory.getPromotion(0);
         $scope.executiveChef = corporateFactory.getLeader(3);
     }])

@@ -1,22 +1,22 @@
 'use strict';
 
 angular.module('confusionApp', ['ui.router'])
+    .constant('baseUrl', "http://localhost:3000/")
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
-
         // route for the home page
             .state('app', {
                 url:'/',
                 views: {
                     'header': {
-                        templateUrl : 'views/header.html',
+                        templateUrl : 'views/header.html'
                     },
                     'content': {
                         templateUrl : 'views/home.html',
                         controller  : 'IndexController'
                     },
                     'footer': {
-                        templateUrl : 'views/footer.html',
+                        templateUrl : 'views/footer.html'
                     }
                 }
 
