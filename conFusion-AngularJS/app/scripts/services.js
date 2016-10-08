@@ -3,7 +3,7 @@
 angular.module('confusionApp')
     //Note that don't forget to add dependencies into the parameter section of function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //otherwise, the error "$http is not defined" will show up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    .service('menuFactory', ['baseUrl', '$http', function (baseUrl, $http) {
+    .service('menuFactory', ['baseUrl', '$resource', function (baseUrl, $resource) {
         //data sharing!!!!!
         var promotions = [
             {
@@ -19,14 +19,7 @@ angular.module('confusionApp')
 
         //getter
         this.getDishes = function () {
-            //using $http.get() method to retrieve data from the server
-            return $http.get(baseUrl + "dishes"); //$http.get() returns a promise object
-
-        };
-
-        this.getDish = function (index) {
-            //using $http.get() method to retrieve data from the server
-            return $http.get(baseUrl + "dishes/" + index); //$http.get() returns a promise object
+            return $resource(baseUrl + "dishes/:id", null, {'update':{method:'PUT'}});
         };
 
         this.getPromotions = function () {

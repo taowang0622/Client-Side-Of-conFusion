@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('confusionApp', ['ui.router'])
+angular.module('confusionApp', ['ui.router', 'ngResource'])
     .constant('baseUrl', "http://localhost:3000/") //use constant method to define contants
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
