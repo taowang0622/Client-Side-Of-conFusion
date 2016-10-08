@@ -7,7 +7,7 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
         //attributes
         $scope.showMenu = true;
         $scope.message = "loading...";
-
+        
         //query() method will return the entire array!!!!!!!!!
         $scope.dishes = menuFactory.getDishes().query();
 
