@@ -4,6 +4,18 @@ angular.module('confusionApp')
     //Note that don't forget to add dependencies into the parameter section of function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //otherwise, the error "$http is not defined" will show up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     .service('menuFactory', ['baseUrl', '$http', function (baseUrl, $http) {
+        //data sharing!!!!!
+        var promotions = [
+            {
+                _id:0,
+                name:'Weekend Grand Buffet',
+                image: 'images/buffet.png',
+                label:'New',
+                price:'19.99',
+                description:'Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person ',
+            }
+
+        ];
 
         //getter
         this.getDishes = function () {
