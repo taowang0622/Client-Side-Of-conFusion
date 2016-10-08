@@ -6,10 +6,12 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
     .controller("MenuController", ['$scope', 'menuFactory', function ($scope, menuFactory) { //by convention, the controller name is UpperCamelCase
         //attributes
         $scope.dishes = [];
-        menuFactory.getDishes().then(
-          function (response) {
-              $scope.dishes = response.data;
-          }
+        menuFactory.getDishes().then(  //menuFactory.getDishes()'s return value is a promise object
+            //and it can't be got immediately, so use then() methods
+            //when the state of promise object is fulfilled/success, this function is executed!!
+            function (response) {
+                $scope.dishes = response.data;
+            }
         );
 
         $scope.tab = 1;
@@ -80,11 +82,11 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
             }
         };
     }])
-    .controller('DishDetailController', ['$scope', 'menuFactory', '$stateParams' ,function ($scope, menuFactory, $stateParams) {
+    .controller('DishDetailController', ['$scope', 'menuFactory', '$stateParams', function ($scope, menuFactory, $stateParams) {
         $scope.showDish = false;
 
-        $scope.dish = [];
-        menuFactory.getDish(parseInt($stateParams.id, 10)).then(
+        $scope.dish = {};
+        menuFactory.getDish(parseInt($stateParams.id, 10)).then( //menuFactory.getDish()'s return value is a promise object
             function (response) {
                 $scope.dish = response.data;
                 $scope.showDish = true;
@@ -98,7 +100,7 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
         $scope.review = {
             author: "",
             rating: "No rating",
-            comment:""
+            comment: ""
         };
 
         $scope.submitComment = function () {
@@ -114,7 +116,7 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
             $scope.review = {
                 author: "",
                 rating: "No rating",
-                comment:""
+                comment: ""
             };
 
             // console.log($scope.review);

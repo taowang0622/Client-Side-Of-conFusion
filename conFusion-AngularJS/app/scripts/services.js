@@ -1,19 +1,20 @@
 'use strict';
 
 angular.module('confusionApp')
-
-    .service('menuFactory', ['baseUrl', '$http' ,function() {
+    //Note that don't forget to add dependencies into the parameter section of function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //otherwise, the error "$http is not defined" will show up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    .service('menuFactory', ['baseUrl', '$http', function (baseUrl, $http) {
 
         //getter
-        this.getDishes = function(){
-
-            return $http.get(baseUrl + "dishes");
+        this.getDishes = function () {
+            //using $http.get() method to retrieve data from the server
+            return $http.get(baseUrl + "dishes"); //$http.get() returns a promise object
 
         };
 
         this.getDish = function (index) {
-
-            return $http.get(baseUrl + "dishes/" + index);
+            //using $http.get() method to retrieve data from the server
+            return $http.get(baseUrl + "dishes/" + index); //$http.get() returns a promise object
         };
 
         this.getPromotions = function () {
@@ -26,7 +27,7 @@ angular.module('confusionApp')
 
     }])
 
-    .factory('corporateFactory', function() {
+    .factory('corporateFactory', function () {
         //data sharing
         var corpfac = {};
 
