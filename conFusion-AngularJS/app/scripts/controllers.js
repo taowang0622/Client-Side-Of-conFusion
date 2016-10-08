@@ -5,12 +5,21 @@
 angular.module("confusionApp") //delete empty array [], but why??????????????????
     .controller("MenuController", ['$scope', 'menuFactory', function ($scope, menuFactory) { //by convention, the controller name is UpperCamelCase
         //attributes
+        $scope.showMenu = false;
+        $scope.message = "loading...";
+
         $scope.dishes = [];
         menuFactory.getDishes().then(  //menuFactory.getDishes()'s return value is a promise object
             //and it can't be got immediately, so use then() methods
             //when the state of promise object is fulfilled/success, this function is executed!!
             function (response) {
                 $scope.dishes = response.data;
+                $scope.showMenu = true;
+            },
+
+            ////when the state of promise object is rejected/fail, this function is executed!!
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
 
@@ -84,12 +93,17 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
     }])
     .controller('DishDetailController', ['$scope', 'menuFactory', '$stateParams', function ($scope, menuFactory, $stateParams) {
         $scope.showDish = false;
+        $scope.message = "loading..";
 
         $scope.dish = {};
         menuFactory.getDish(parseInt($stateParams.id, 10)).then( //menuFactory.getDish()'s return value is a promise object
             function (response) {
                 $scope.dish = response.data;
                 $scope.showDish = true;
+            },
+
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         )
 
@@ -127,6 +141,7 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
     //IndexController controlls the home page
     .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
         $scope.showDish = false;
+        $scope.message = "loading";
 
         // $scope.featuredDish = menuFactory.getDish(0);
         $scope.featuredDish = {};
@@ -134,6 +149,9 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
             function (response) {
                 $scope.featuredDish = response.data;
                 $scope.showDish = true;
+            },
+            function (response) {
+              $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
 

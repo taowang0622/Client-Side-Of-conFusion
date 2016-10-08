@@ -7,8 +7,11 @@
             <h3 align=center>Our Lipsmacking Culinary Creations</h3>
         </div>
         <div class="col-xs-12 col-sm-9 col-sm-pull-3">
+            <div ng-if="!showDish">
+                <h3>{{message}}</h3>
+            </div>
             <!--featured dish-->
-            <div class="media">
+            <div class="media" ng-if="showDish">
                 <div class="media-left media-middle">
                     <img ng-src={{featuredDish.image}} class="media-object thumbnail">
                 </div>
