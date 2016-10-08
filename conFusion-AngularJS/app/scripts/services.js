@@ -18,6 +18,9 @@ angular.module('confusionApp')
         ];
 
         //getter
+
+        //in the "dishes/:id", "id" is "a URL parameter" to be assigned by, like .get({id:0}) where {id:0} is "a URL assignment"!!!!!!!!!!!!!!!!!!
+        //Remember: in web application, if you want data from the server, must use URL to locate data that you want!!!!!!!!!!!!!!!!!!
         this.getDishes = function () {
             return $resource(baseUrl + "dishes/:id", null, {'update':{method:'PUT'}});
         };

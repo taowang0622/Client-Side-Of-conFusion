@@ -5,11 +5,20 @@
 angular.module("confusionApp") //delete empty array [], but why??????????????????
     .controller("MenuController", ['$scope', 'menuFactory', function ($scope, menuFactory) { //by convention, the controller name is UpperCamelCase
         //attributes
-        $scope.showMenu = true;
+        $scope.showMenu = false;
         $scope.message = "loading...";
-        
-        //query() method will return the entire array!!!!!!!!!
-        $scope.dishes = menuFactory.getDishes().query();
+
+        menuFactory.getDishes().query(
+            function (response) {
+                //The big difference between $http and $resource is when request successful, the returned response object
+                //is just wanted data, not including the state of response, etc.
+                $scope.dishes = response;
+                $scope.showMenu = true;
+            },
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
 
         $scope.tab = 1;
         $scope.filtText = '';
@@ -80,18 +89,26 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
         };
     }])
     .controller('DishDetailController', ['$scope', 'menuFactory', '$stateParams', function ($scope, menuFactory, $stateParams) {
-        $scope.showDish = true;
+        $scope.showDish = false;
         $scope.message = "loading..";
 
-        $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id, 10)})
+        menuFactory.getDishes().get({id: parseInt($stateParams.id, 10)}).$promise.then(
+            function (response) {
+                $scope.dish = response;
+                $scope.showDish = true;
+            },
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        )
 
     }])
 
-    .controller('DishCommentController', ['$scope', function ($scope) {
+    .controller('DishCommentController', ['$scope', 'menuFactory', function ($scope, menuFactory) {
 
         $scope.review = {
             author: "",
-            rating: "No rating",
+            rating: 5,
             comment: ""
         };
 
@@ -101,27 +118,35 @@ angular.module("confusionApp") //delete empty array [], but why?????????????????
             $scope.dish.comments.push($scope.review);
             //$scope.review is just a reference. Don't worry, later on, $scope.review will point to a new object
 
-            //debug
-            // console.log($scope.dish.comments[$scope.dish.comments.length - 1]);
+            //submit the user's review about a dish to the server
+            //Remember: all resources are located with URL in web application!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //so the first assignment of update() is not a filter but a "URL assignment" in the dishes/:id in the services.js
+            menuFactory.getDishes().update({id:$scope.dish.id}, $scope.dish);
 
             //$scope.review points to a new object with default values.
             $scope.review = {
                 author: "",
-                rating: "No rating",
+                rating: 5,
                 comment: ""
             };
 
-            // console.log($scope.review);
-            //debug
             $scope.commentForm.$setPristine();
         };
     }])
     //IndexController controlls the home page
     .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
-        $scope.showDish = true;
+        $scope.showDish = false;
         $scope.message = "loading";
 
-        $scope.featuredDish = menuFactory.getDishes().get({id:0});
+        menuFactory.getDishes().get({id: 0}).$promise.then(
+            function (response) {
+                $scope.featuredDish = response;
+                $scope.showDish = true;
+            },
+            function (response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
 
         $scope.featuredPromotion = menuFactory.getPromotion(0);
         $scope.executiveChef = corporateFactory.getLeader(3);
