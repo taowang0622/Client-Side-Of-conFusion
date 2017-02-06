@@ -1,2 +1,2 @@
 # conFusion
-This is for practicing using AngularJS and Bootstrap
+This is for practicing the use of AngularJS and Bootstrap
